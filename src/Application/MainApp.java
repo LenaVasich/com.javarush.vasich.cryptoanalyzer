@@ -1,10 +1,13 @@
 package Application;//Это главный класс, откуда начинается выполнение программы.
 // Отвечает за обработку команд пользователя, вызов соответствующих методов и управление потоком работы программы
 
+import Utils.BruteForce;
+import Utils.Cipher;
 import Utils.StatisticalAnalyzer;
 import Utils.Validator;
 
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class MainApp {
     public static void main(String[] args) {
@@ -26,7 +29,6 @@ public class MainApp {
         int cipherKey;
 
 
-
         do {
             try {
                 answer = Integer.parseInt(console.nextLine());
@@ -34,51 +36,57 @@ public class MainApp {
                 switch (answer){
                     case 1:
                         System.out.println("Вы выбрали зашифровать файл.");
-                        System.out.println("Введите путь к файлу:");
+                        //переделать на файл
+                        System.out.println("Введите строку:");
                         sourceFilePath = console.nextLine();
                         //Utils.Validator.checkFile(sourceFilePath);
 
                         System.out.println("Введите ключ шифрования:");
                         cipherKey = Validator.checkKey(console.nextLine());
-
-
-                        //Utils.Validator.Utils.Cipher.encryption(sourceFilePath);
-                        System.out.println("Файл успешно зашифрован! Путь к файлу: ...");
+                        String encryptedLine = Utils.Cipher.encryption(sourceFilePath, cipherKey);
+                        System.out.println("Файл успешно зашифрован! Вот результат...");
+                        System.out.println(encryptedLine);
                         break;
-
-
-
 
                     case 2:
                         System.out.println("Вы выбрали расшифровать файл.");
-                        System.out.println("Введите путь к файлу:");
+                        //переделать на файл
+                        System.out.println("Введите строку:");
                         sourceFilePath = console.nextLine();
                         //Utils.Validator.checkFile(sourceFilePath);
+
                         System.out.println("Введите ключ шифрования:");
                         cipherKey = Validator.checkKey(console.nextLine());
 
-                        //Validator.Cipher.decryption(sourceFilePath);
-                        System.out.println("Файл успешно расшифрован по указанному ключу! Путь к файлу: ...");
+                        String decryptedLine = Cipher.decryption(sourceFilePath, cipherKey);
+                        System.out.println("Файл успешно расшифрован по указанному ключу! Вот результат...");
+                        System.out.println(decryptedLine);
                         break;
+
                     case 3:
                         System.out.println("Вы выбрали расшифровать файл с помощью brute force");
-                        System.out.println("Введите путь к файлу:");
+                        //System.out.println("Введите путь к файлу:");
+                        System.out.println("Введите строку:");
                         sourceFilePath = console.nextLine();
                         //Utils.Validator.checkFile(sourceFilePath);
-                        //Validator.BruteForce.bruteForceEncryption(sourceFilePath);
+                        TreeMap<Integer, String> result = BruteForce.bruteforseDecryption(sourceFilePath);
                         System.out.println("Файл со всеми вариантами расшифровки успешно создан! Путь к файлу: ...");
+                        System.out.println(result);
                         break;
+
                     case 4:
                         System.out.println("Вы выбрали расшифровать файл с помощью  статистического анализа");
                         sourceFilePath = console.nextLine();
                         //Utils.Validator.checkFile(sourceFilePath);
                         StatisticalAnalyzer.staticAnalyzerEncryption(sourceFilePath);
                         break;
+
                     case 5:
                         System.out.println("Программа завершена. Пока!");
                         console.close();
                         System.exit(0);
                         break;
+
                     default:
                         System.out.println(ERROR_TEXT);
                 }
