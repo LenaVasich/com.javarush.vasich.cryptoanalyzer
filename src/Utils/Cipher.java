@@ -2,16 +2,13 @@ package Utils;//Класс, реализующий функциональнос�
 
 import Data.Alphabet;
 
-import java.util.Scanner;
-
 public class Cipher {
 
     public static int alphabetLength = Alphabet.getAlphabetSmallRusSize();
 
-
     public static String encryption(String line, int key) {
 
-        char[] lineCharArray = line.toCharArray();
+        char[] lineCharArray = line.toLowerCase().toCharArray();
         StringBuilder encryptedLine = new StringBuilder();
 
         for (char c : lineCharArray) {
@@ -26,7 +23,7 @@ public class Cipher {
     }
 
     public static String decryption(String line, int key) {
-        char[] lineCharArray = line.toCharArray();
+        char[] lineCharArray = line.toLowerCase().toCharArray();
         StringBuilder decryptedLine = new StringBuilder();
 
         for (char c : lineCharArray) {
@@ -40,4 +37,7 @@ public class Cipher {
         return decryptedLine.toString();
     }
 
+//    private static String cipherMechanic(){
+//
+//    }
 }

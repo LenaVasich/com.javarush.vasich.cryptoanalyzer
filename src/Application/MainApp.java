@@ -1,10 +1,7 @@
 package Application;//Это главный класс, откуда начинается выполнение программы.
 // Отвечает за обработку команд пользователя, вызов соответствующих методов и управление потоком работы программы
 
-import Utils.BruteForce;
-import Utils.Cipher;
-import Utils.StatisticalAnalyzer;
-import Utils.Validator;
+import Utils.*;
 
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -36,14 +33,12 @@ public class MainApp {
                 switch (answer){
                     case 1:
                         System.out.println("Вы выбрали зашифровать файл.");
-                        //переделать на файл
-                        System.out.println("Введите строку:");
-                        sourceFilePath = console.nextLine();
-                        //Utils.Validator.checkFile(sourceFilePath);
-
+                        System.out.println("Введите адрес файла для шифрования:");
+                        sourceFilePath = Utils.Validator.checkFileExists(console.nextLine()); //добавить обработку выхода из метода в главное меню!
+// C:\Users\Elena\IdeaProjects\com.javarush.vasich.cryptoanalyzer\src\Data\text.txt
                         System.out.println("Введите ключ шифрования:");
                         cipherKey = Validator.checkKey(console.nextLine());
-                        String encryptedLine = Utils.Cipher.encryption(sourceFilePath, cipherKey);
+                        String encryptedLine = Utils.Cipher.encryption(FileUtils.readFile(sourceFilePath), cipherKey);
                         System.out.println("Файл успешно зашифрован! Вот результат...");
                         System.out.println(encryptedLine);
                         break;
