@@ -1,93 +1,76 @@
 package Application;//Это главный класс, откуда начинается выполнение программы.
 // Отвечает за обработку команд пользователя, вызов соответствующих методов и управление потоком работы программы
 
+import Data.Texts;
 import Utils.*;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Scanner;
-import java.util.TreeMap;
 
 public class MainApp {
     public static void main(String[] args) {
 
-        final String ERROR_TEXT = "Такого варианта ответа нет! Пожалуйста, введите целое число от 1 до 5.";
-
-        System.out.println("Вас приветствует Криптоанализатор!");
-        System.out.println("Введите цифру для выбора действия:");
-        System.out.println("1. Зашифровать файл");
-        System.out.println("2. Расшифровать файл с помощью ключа");
-        System.out.println("3. Расшифровать файл с помощью brute force");
-        System.out.println("4. Расшифровать файл с помощью  статистического анализа (в разработке)");
-        System.out.println("5. Выход");
-
         Scanner console = new Scanner(System.in);
-
         int answer = 0;
-        String sourceFilePath;
         int cipherKey;
+        Path sourseFile, destinationFile;
 
+        for (String s : Texts.menuText) {
+            System.out.println(s);
+        }
 
         do {
             try {
                 answer = Integer.parseInt(console.nextLine());
 
-                switch (answer){
+                switch (answer) {
+                    //добавить везде обработку выхода из метода в главное меню!!!!!!
                     case 1:
-                        System.out.println("Вы выбрали зашифровать файл.");
-                        System.out.println("Введите адрес файла для шифрования:");
-                        sourceFilePath = Utils.Validator.checkFileExists(console.nextLine()); //добавить обработку выхода из метода в главное меню!
-// C:\Users\Elena\IdeaProjects\com.javarush.vasich.cryptoanalyzer\src\Data\text.txt
-                        System.out.println("Введите ключ шифрования:");
-                        cipherKey = Validator.checkKey(console.nextLine());
-                        String encryptedLine = Utils.Cipher.encryption(FileUtils.readFile(sourceFilePath), cipherKey);
-                        System.out.println("Файл успешно зашифрован! Вот результат...");
-                        System.out.println(encryptedLine);
+                        System.out.println(Texts.MENU_1);
+                        sourseFile = FileManager.getSourceFilePath();  // C:\Users\Elena\IdeaProjects\com.javarush.vasich.cryptoanalyzer\src\Data\text.txt
+                        cipherKey = Cipher.getCipherKey();
+                        destinationFile = FileManager.getDestinationFilePath();
+                        Cipher.cipherText(sourseFile, cipherKey, destinationFile, true);
                         break;
 
                     case 2:
-                        System.out.println("Вы выбрали расшифровать файл.");
-                        //переделать на файл
-                        System.out.println("Введите строку:");
-                        sourceFilePath = console.nextLine();
-                        //Utils.Validator.checkFile(sourceFilePath);
-
-                        System.out.println("Введите ключ шифрования:");
-                        cipherKey = Validator.checkKey(console.nextLine());
-
-                        String decryptedLine = Cipher.decryption(sourceFilePath, cipherKey);
-                        System.out.println("Файл успешно расшифрован по указанному ключу! Вот результат...");
-                        System.out.println(decryptedLine);
+                        System.out.println(Texts.MENU_2);
+                        sourseFile = FileManager.getSourceFilePath();
+                        cipherKey = Cipher.getCipherKey();
+                        destinationFile = FileManager.getDestinationFilePath();
+                        Cipher.cipherText(sourseFile, cipherKey, destinationFile, false);
                         break;
 
                     case 3:
-                        System.out.println("Вы выбрали расшифровать файл с помощью brute force");
-                        //System.out.println("Введите путь к файлу:");
-                        System.out.println("Введите строку:");
-                        sourceFilePath = console.nextLine();
-                        //Utils.Validator.checkFile(sourceFilePath);
-                        TreeMap<Integer, String> result = BruteForce.bruteforseDecryption(sourceFilePath);
-                        System.out.println("Файл со всеми вариантами расшифровки успешно создан! Путь к файлу: ...");
-                        System.out.println(result);
+                        System.out.println(Texts.MENU_3);
+                        sourseFile = FileManager.getSourceFilePath();
+                        destinationFile = FileManager.getDestinationFilePath();
+                        Cipher.decryptByBruteForce(sourseFile, destinationFile);
                         break;
 
                     case 4:
+                        System.out.println(Texts.MENU_4);
                         System.out.println("Вы выбрали расшифровать файл с помощью  статистического анализа");
-                        sourceFilePath = console.nextLine();
-                        //Utils.Validator.checkFile(sourceFilePath);
-                        StatisticalAnalyzer.staticAnalyzerEncryption(sourceFilePath);
+                        //sourseFile = FileManager.getSourceFilePath();
+                        //destinationFile = FileManager.getDestinationFilePath();
+                        StatisticalAnalyzer.findMostLikelyShift();
                         break;
 
                     case 5:
-                        System.out.println("Программа завершена. Пока!");
+                        System.out.println(Texts.MENU_5);
                         console.close();
                         System.exit(0);
                         break;
 
                     default:
-                        System.out.println(ERROR_TEXT);
+                        System.out.println(Texts.MENU_ERROR_TEXT);
                 }
 
             } catch (NumberFormatException e) {
-                System.out.println(ERROR_TEXT);
+                System.out.println(Texts.MENU_ERROR_TEXT);
+            } catch (IOException e) {
+                System.out.println(Texts.IO_ERROR_TEXT);
             }
         } while (answer != 5);
     }

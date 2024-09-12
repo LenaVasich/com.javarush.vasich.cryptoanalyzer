@@ -15,12 +15,6 @@ public class Alphabet {
     );
              // 43 элемента!
 
-
-    private static final int ALPHABET_SMALL_RUS_SIZE = ALPHABET_SMALL_RUS.size();
-
-    public static int getAlphabetSmallRusSize() {
-        return ALPHABET_SMALL_RUS_SIZE;
-    }
-
+    public static final int alphabetSmallRusLength = ALPHABET_SMALL_RUS.size();
 
 }
