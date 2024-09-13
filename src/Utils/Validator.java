@@ -4,6 +4,7 @@ import Data.Alphabet;
 import Data.Texts;
 
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.Scanner;
 
@@ -11,24 +12,28 @@ public class Validator {
 
     static Scanner console = new Scanner(System.in);
 
+    /*______КЛЮЧ_____*/
+
     public static int isValidKey(String key) {
 
         int checkedKey = 0;
 
-        do {
+        while (checkedKey < 1)
             try {
-                checkedKey = correctKeyNumber(Integer.parseInt(key));
-                if (checkedKey < 1) {
-                    System.out.println(Texts.KEY_IS_ZERO);
-                    key = console.nextLine();
+                if (key.equalsIgnoreCase("exit")) {
+                    System.out.println(Texts.RETURNING);
+                    return 0;
+                } else {
+                    checkedKey = correctKeyNumber(Integer.parseInt(key));
+                    if (checkedKey < 1) {
+                        System.out.println(Texts.KEY_IS_ZERO);
+                        key = console.nextLine();
+                    }
                 }
             } catch (NumberFormatException e) {
                 System.out.println(Texts.KEY_IS_NAN);
                 key = console.nextLine();
             }
-
-        }
-        while (checkedKey < 1);
 
         System.out.println(Texts.KEY_IS_CORRECT);
         return checkedKey;
@@ -39,35 +44,50 @@ public class Validator {
         return key < Alphabet.alphabetSmallRusLength ? key : key % Alphabet.alphabetSmallRusLength;
     }
 
+    /*______ФАЙЛ_____*/
+
     public static Path isFileExists(String filePath) {
+        while (true) {
+            if (filePath.equals("5")) {
+                System.out.println(Texts.RETURNING);
+                return null;
+            } else {
+                try {
+                    Path file = Path.of(filePath);
+                    if (Files.exists(file)) {
+                        System.out.println(Texts.FILE_FOUND);
+                        return file;
+                    } else {
+                        System.out.println(Texts.FILE_NOT_FOUND);
+                        filePath = console.nextLine();
+                    }
+                } catch (InvalidPathException e) {
+                    System.out.println(Texts.FILE_NOT_FOUND);
+                    filePath = console.nextLine();
+                }
+            }
+        }
+    }
+
+    public static Path ifFileDoesNotExist(String filePath) {
 
         while (true) {
             if (filePath.equals("5")) {
                 System.out.println(Texts.RETURNING);
                 return null;
             }
-            Path file = Path.of(filePath);
-            if (Files.exists(file)) {
-                System.out.println(Texts.FILE_FOUND);
-                return file;
-            } else {
-                System.out.println(Texts.FILE_NOT_FOUND);
+            try {
+                Path file = Path.of(filePath);
+                if (Files.exists(file)) {
+                    System.out.println(Texts.FILE_ALREADY_EXISTS);
+                    filePath = console.nextLine();
+                } else
+                    return file;
+            } catch (InvalidPathException e) {
+                System.out.println(Texts.FILE_WRONG_NAME);
                 filePath = console.nextLine();
             }
-        }
 
-    }
-
-    public static Path checkIfFileDoesNotExist(Path path) {
-        Path file = path;
-
-        while (true){
-            if (Files.exists(file)){
-                System.out.println(Texts.FILE_ALREADY_EXISTS);
-                file = Path.of(console.nextLine());
-            }
-            else
-                return file;
         }
     }
 }

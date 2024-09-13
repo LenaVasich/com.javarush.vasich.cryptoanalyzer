@@ -26,13 +26,14 @@ public class FileManager {
 
     /*______ПОЛУЧЕНИЕ ПУТИ_____*/
 
-    public static Path getSourceFilePath(){
+    public static Path getSourceFilePath() {
         System.out.println(Texts.ENTER_FILE);
         return Utils.Validator.isFileExists(console.nextLine());
     }
+
     public static Path getDestinationFilePath() {
         System.out.println(Texts.ENTER_RESULT_FILE);
-        return Validator.checkIfFileDoesNotExist(Path.of(console.nextLine()));
+        return Validator.ifFileDoesNotExist(console.nextLine());
     }
 
     /*______ЧТЕНИЕ_____*/
@@ -50,6 +51,17 @@ public class FileManager {
             return stringLine.toCharArray();
         } catch (IOException e) {
             System.out.println(Texts.ERROR_READ_SMALL_FILE);
+            return new char[0];
+        }
+    }
+
+    public static char[] readFirstLineOfBigFile(Path file) {
+        try (BufferedReader reader = Files.newBufferedReader(file)) {
+            String line = reader.readLine();
+            System.out.println(Texts.SUCCESS_READ_FIRST_LINE);
+            return line.toCharArray();
+        } catch (IOException e) {
+            System.out.println(Texts.ERROR_READ_BIG_FILE);
             return new char[0];
         }
     }

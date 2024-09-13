@@ -15,11 +15,11 @@ public class Cipher {
 
     private static final int AB_S_RUS_LENGTH = Alphabet.alphabetSmallRusLength;
     private static final long SIZE_OF_BIG_FILE = 10 * 1024 * 1024; //10 Mb
+    public static Scanner console = new Scanner(System.in);
 
     /*______ПОЛУЧЕНИЕ КЛЮЧА_____*/
 
     public static int getCipherKey() {
-        Scanner console = new Scanner(System.in);
         System.out.println(Texts.ENTER_KEY);
         return Validator.isValidKey(console.nextLine());
     }
@@ -29,12 +29,11 @@ public class Cipher {
     public static char[] cipherCharArrayMechanism(char[] sourceCharArray, int key, boolean keyPlus) { //KeyPlus - true - шифруем, false - дешифруем
         char[] decryptedCharArray = new char[sourceCharArray.length];
         for (int i = 0; i < sourceCharArray.length; i++) {
-            if (Alphabet.ALPHABET_SMALL_RUS.contains(sourceCharArray[i])) {
-                int origIndex = Alphabet.ALPHABET_SMALL_RUS.indexOf(sourceCharArray[i]);
+            if (Alphabet.ALPHABET_SMALL_RUS.contains(Character.toLowerCase(sourceCharArray[i]))) {
+                int origIndex = Alphabet.ALPHABET_SMALL_RUS.indexOf(Character.toLowerCase(sourceCharArray[i]));
                 int destinationIndex = keyPlus ?
                         ((origIndex + key) < AB_S_RUS_LENGTH ? (origIndex + key) : (origIndex + key) % AB_S_RUS_LENGTH) :
                         ((origIndex - key) >= 0 ? (origIndex - key) : AB_S_RUS_LENGTH + origIndex - key);
-                
                 decryptedCharArray[i] = Alphabet.ALPHABET_SMALL_RUS.get(destinationIndex);
             } else
                 decryptedCharArray[i] = '-';
@@ -50,50 +49,60 @@ public class Cipher {
         else            System.out.println(Texts.DECRYPTING);
 
         if (isFileSmall(sourceFile)) {
-            char[] sourceCharArray = Utils.FileManager.readSmallFile(sourceFile);
+            char[] sourceCharArray = FileManager.readSmallFile(sourceFile);
             char[] decryptedCharArray = cipherCharArrayMechanism(sourceCharArray, key, keyPlus);
-            Utils.FileManager.createFile(destinationFile);
-            Utils.FileManager.writeToSmallFile(destinationFile, decryptedCharArray);
+            FileManager.createFile(destinationFile);
+            FileManager.writeToSmallFile(destinationFile, decryptedCharArray);
         } else {
-            ArrayList<char[]> listOfCharLines = Utils.FileManager.readBigFile(sourceFile);
+            ArrayList<char[]> listOfCharLines = FileManager.readBigFile(sourceFile);
             ArrayList<char[]> resultCharArray = new ArrayList<>();
             for (char[] line : listOfCharLines) {
                 resultCharArray.add(cipherCharArrayMechanism(line, key, keyPlus));
             }
-            Utils.FileManager.createFile(destinationFile);
-            Utils.FileManager.writeToBigFile(destinationFile, resultCharArray);
+            FileManager.createFile(destinationFile);
+            FileManager.writeToBigFile(destinationFile, resultCharArray);
         }
     }
 
 
     public static void decryptByBruteForce(Path sourceFile, Path destinationFile) throws IOException {
 
-        System.out.println(Texts.DECRYPTING);
-
         if (isFileSmall(sourceFile)) {
-            char[] sourceCharArray = Utils.FileManager.readSmallFile(sourceFile);
-            TreeMap<Integer, char[]> result = new TreeMap<>();
-
-            for (int i = 1; i < Alphabet.alphabetSmallRusLength; i++) {
-                result.put(i, cipherCharArrayMechanism(sourceCharArray, i, false));
-            }
-
-            StringBuilder data = new StringBuilder();
-            for (Map.Entry<Integer, char[]> entry : result.entrySet()) {
-                Integer key = entry.getKey();
-                char[] charArray = entry.getValue();
-                data.append(key).append(": ").append(new String(charArray)).append(System.lineSeparator());
-            }
-
-            char[] dataToWrite = data.toString().toCharArray();
+            System.out.println(Texts.DECRYPTING_BRUTE_FORCE);
+            char[] sourceCharArray = FileManager.readSmallFile(sourceFile);
+            char[] resultCharArray = bruteForceMechanism(sourceCharArray);
             Utils.FileManager.createFile(destinationFile);
-            FileManager.writeToSmallFile(destinationFile, dataToWrite);
-
+            FileManager.writeToSmallFile(destinationFile, resultCharArray);
             //добавить предположение согласно статистике....
         } else {
-            System.out.println("Слишком много, я пока так не могуууу....");
+            System.out.println(Texts.DECRYPTING_BRUTE_BIG_FILE);
+            char[] firstLine = FileManager.readFirstLineOfBigFile(sourceFile);
+            System.out.println(Texts.DECRYPTING);
+            char[] firstLineBruteForce = bruteForceMechanism(firstLine);
+            System.out.println(firstLineBruteForce);
+            System.out.println("Выберите ключ. Ведите число от 1 до ...");
+            int key = Validator.isValidKey(console.nextLine());
+            cipherText(sourceFile, key, destinationFile, false);
         }
 
+    }
+
+    private static char[] bruteForceMechanism(char[] sourceCharArray){
+
+        TreeMap<Integer, char[]> result = new TreeMap<>();
+
+        for (int i = 1; i < Alphabet.alphabetSmallRusLength; i++) {
+            result.put(i, cipherCharArrayMechanism(sourceCharArray, i, false));
+        }
+
+        StringBuilder data = new StringBuilder();
+        for (Map.Entry<Integer, char[]> entry : result.entrySet()) {
+            Integer key = entry.getKey();
+            char[] charArray = entry.getValue();
+            data.append(key).append(": ").append(new String(charArray)).append(System.lineSeparator());
+        }
+
+        return data.toString().toCharArray();
     }
 
 

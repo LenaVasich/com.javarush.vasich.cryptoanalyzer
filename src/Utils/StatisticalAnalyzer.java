@@ -2,6 +2,6 @@ package Utils;//Для статистического анализа при ра
 
 public class StatisticalAnalyzer {
     public static void findMostLikelyShift(){
-        System.out.println("Пока что без понятия как это делать, сорян))");
+        System.out.println("Пока что без понятия как это делать, сорян)) Введите другую цифру!");
     }
 }
