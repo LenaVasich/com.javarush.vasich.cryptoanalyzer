@@ -25,52 +25,50 @@ public class Cipher {
     }
 
     /*______МЕХАНИЗМ ШИФРОВАНИЯ_____*/
-
-    private static char[] cipherCharArrayMechanism(char[] sourceCharArray, int key, boolean keyPlus) { //KeyPlus - true - шифруем, false - дешифруем
-        char[] decryptCharArray = new char[sourceCharArray.length];
+//private
+    public static char[] cipherCharArrayMechanism(char[] sourceCharArray, int key, boolean keyPlus) { //KeyPlus - true - шифруем, false - дешифруем
+        char[] decryptedCharArray = new char[sourceCharArray.length];
         for (int i = 0; i < sourceCharArray.length; i++) {
             if (Alphabet.ALPHABET_SMALL_RUS.contains(sourceCharArray[i])) {
                 int origIndex = Alphabet.ALPHABET_SMALL_RUS.indexOf(sourceCharArray[i]);
-                int destinationIndex;
-                if (keyPlus)
-                    destinationIndex = (origIndex + key) < AB_S_RUS_LENGTH ? (origIndex + key) : (origIndex + key) % AB_S_RUS_LENGTH;
-                else
-                    destinationIndex = (origIndex - key) >= 0 ? (origIndex - key) : AB_S_RUS_LENGTH + origIndex - key;
-                decryptCharArray[i] = Alphabet.ALPHABET_SMALL_RUS.get(destinationIndex);
+                int destinationIndex = keyPlus ?
+                        ((origIndex + key) < AB_S_RUS_LENGTH ? (origIndex + key) : (origIndex + key) % AB_S_RUS_LENGTH) :
+                        ((origIndex - key) >= 0 ? (origIndex - key) : AB_S_RUS_LENGTH + origIndex - key);
+                
+                decryptedCharArray[i] = Alphabet.ALPHABET_SMALL_RUS.get(destinationIndex);
             } else
-                decryptCharArray[i] = '-';
+                decryptedCharArray[i] = '-';
         }
-        return decryptCharArray;
+        return decryptedCharArray;
     }
 
     /*______ШИФРОВАНИЕ/ДЕШИФРОВАНИЕ ФАЙЛА_____*/
 
     public static void cipherText(Path sourceFile, int key, Path destinationFile, boolean keyPlus) throws IOException {
 
-        Utils.FileManager.createFile(destinationFile);
         if (keyPlus)    System.out.println(Texts.ENCRYPTING);
         else            System.out.println(Texts.DECRYPTING);
 
         if (isFileSmall(sourceFile)) {
             char[] sourceCharArray = Utils.FileManager.readSmallFile(sourceFile);
-            char[] resultCharArray = cipherCharArrayMechanism(sourceCharArray, key, true);
-            Utils.FileManager.writeToSmallFile(destinationFile, resultCharArray);
+            char[] decryptedCharArray = cipherCharArrayMechanism(sourceCharArray, key, keyPlus);
+            Utils.FileManager.createFile(destinationFile);
+            Utils.FileManager.writeToSmallFile(destinationFile, decryptedCharArray);
         } else {
             ArrayList<char[]> listOfCharLines = Utils.FileManager.readBigFile(sourceFile);
             ArrayList<char[]> resultCharArray = new ArrayList<>();
             for (char[] line : listOfCharLines) {
-                resultCharArray.add(cipherCharArrayMechanism(line, key, true));
+                resultCharArray.add(cipherCharArrayMechanism(line, key, keyPlus));
             }
+            Utils.FileManager.createFile(destinationFile);
             Utils.FileManager.writeToBigFile(destinationFile, resultCharArray);
         }
     }
 
 
-
     public static void decryptByBruteForce(Path sourceFile, Path destinationFile) throws IOException {
 
         System.out.println(Texts.DECRYPTING);
-        Utils.FileManager.createFile(destinationFile);
 
         if (isFileSmall(sourceFile)) {
             char[] sourceCharArray = Utils.FileManager.readSmallFile(sourceFile);
@@ -84,12 +82,11 @@ public class Cipher {
             for (Map.Entry<Integer, char[]> entry : result.entrySet()) {
                 Integer key = entry.getKey();
                 char[] charArray = entry.getValue();
-
-                for (char c : charArray) {
-                    data.append("key =  ").append(key).append(", ").append(c).append(System.lineSeparator());
-                }
+                data.append(key).append(": ").append(new String(charArray)).append(System.lineSeparator());
             }
+
             char[] dataToWrite = data.toString().toCharArray();
+            Utils.FileManager.createFile(destinationFile);
             FileManager.writeToSmallFile(destinationFile, dataToWrite);
 
             //добавить предположение согласно статистике....

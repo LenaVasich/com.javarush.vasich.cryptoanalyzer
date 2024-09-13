@@ -38,7 +38,7 @@ public class MainApp {
                         System.out.println(Texts.MENU_2);
                         sourseFile = FileManager.getSourceFilePath();
                         cipherKey = Cipher.getCipherKey();
-                        destinationFile = FileManager.getDestinationFilePath();
+                        destinationFile = FileManager.getDestinationFilePath(); // C:\Users\Elena\IdeaProjects\com.javarush.vasich.cryptoanalyzer\result.txt
                         Cipher.cipherText(sourseFile, cipherKey, destinationFile, false);
                         break;
 
@@ -51,7 +51,6 @@ public class MainApp {
 
                     case 4:
                         System.out.println(Texts.MENU_4);
-                        System.out.println("Вы выбрали расшифровать файл с помощью  статистического анализа");
                         //sourseFile = FileManager.getSourceFilePath();
                         //destinationFile = FileManager.getDestinationFilePath();
                         StatisticalAnalyzer.findMostLikelyShift();

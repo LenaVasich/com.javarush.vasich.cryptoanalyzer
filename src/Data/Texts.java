@@ -1,6 +1,8 @@
 package Data;
 
 public class Texts {
+
+    //menu
     public static final String[] menuText = {
             "Вас приветствует Криптоанализатор!",
             "Введите цифру для выбора действия:",
@@ -10,7 +12,6 @@ public class Texts {
             "4. Расшифровать файл с помощью  статистического анализа (в разработке)",
             "5. Выход"
     };
-    //menu
     public static final String MENU_ERROR_TEXT = "Такого варианта ответа нет! Пожалуйста, введите целое число от 1 до 5.";
     public static final String IO_ERROR_TEXT = "IO ошибка";
     public static final String MENU_1 = "Вы выбрали зашифровать файл.";
@@ -34,10 +35,10 @@ public class Texts {
     public static final String FILE_ALREADY_EXISTS = "Такой файл уже существует! Не будем его переписывать. Давайте новый";
 
     //fileManager
-    public static final String SUCCESS_ENCRYPTION_TEXT = "Успешный успех! Текст зашифрован и находится в файле по адресу: ";
-    public static final String SUCCESS_READ = "Файл успешно прочитан..";
-    public static final String SUCCESS_CREATED = "Файл успешно создан..";
-    public static final String ERROR_CREATED = "Файл успешно создан..";
+    public static final String SUCCESS_ENCRYPTION_TEXT = "Успешный успех! Результат записан в файле по адресу: ";
+    public static final String SUCCESS_READ = "Файл успешно прочитан...";
+    public static final String SUCCESS_CREATED = "Файл для записи результата успешно создан...";
+    public static final String ERROR_CREATED = "Что-то пошло не так при создании файла...";
     public static final String ERROR_READ_SMALL_FILE = "Что-то пошло не так при чтении маленького файла.... =(";
     public static final String ERROR_WRITE_SMALL_FILE = "Что-то пошло не так при записи маленького файла.... =(";
     public static final String ERROR_READ_BIG_FILE = "Что-то пошло не так при чтении большого файла.... =(";

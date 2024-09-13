@@ -18,7 +18,7 @@ public class FileManager {
     public static void createFile(Path file) {
         try {
             Files.createFile(file); //создавать в заданной папке если указано только название
-            System.out.println(Texts.SUCCESS_CREATED + file.toAbsolutePath());
+            System.out.println(Texts.SUCCESS_CREATED);
         } catch (IOException e) {
             System.out.println(Texts.ERROR_CREATED);
         }
