@@ -11,15 +11,14 @@ public class Texts {
             "2. Расшифровать файл с помощью ключа",
             "3. Расшифровать файл с помощью brute force",
             "4. Расшифровать файл с помощью  статистического анализа (в разработке)",
-            "5. Выход",
-            ""
+            "5. Выход"
     };
     public static final String MENU_ERROR_TEXT = "Такого варианта ответа нет! Пожалуйста, введите целое число от 1 до 5.";
     public static final String IO_ERROR_TEXT = "IO ошибка";
     public static final String MENU_1 = "Вы выбрали зашифровать файл.";
     public static final String MENU_2 = "Вы выбрали расшифровать файл.";
     public static final String MENU_3 = "Вы выбрали расшифровать файл с помощью brute force.";
-    public static final String MENU_4 = "Вы выбрали расшифровать файл с помощью  статистического анализа";
+    public static final String MENU_4 = "Вы выбрали расшифровать файл с помощью  статистического анализа.";
     public static final String MENU_5 = "Программа завершена. Пока!";
     public static final String ENTER_FILE = "Введите адрес и имя файла для шифрования:";
     public static final String ENTER_KEY = "Введите ключ шифрования (целое число больше 0) или exit для выхода в главное меню:";
