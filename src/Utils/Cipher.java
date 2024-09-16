@@ -12,7 +12,7 @@ import java.util.TreeMap;
 
 public class Cipher {
 
-    private static final int AB_S_RUS_LENGTH = Alphabet.alphabetSmallRusLength;
+    private static final int AB_S_RUS_LENGTH = Alphabet.ALPHABET_LENGTH;
     public static Scanner console = new Scanner(System.in);
 
     /*______ПОЛУЧЕНИЕ КЛЮЧА_____*/
@@ -27,12 +27,12 @@ public class Cipher {
     public static char[] cipherCharArrayMechanism(char[] sourceCharArray, int key, boolean keyPlus) { //KeyPlus - true - шифруем, false - дешифруем
         char[] decryptedCharArray = new char[sourceCharArray.length];
         for (int i = 0; i < sourceCharArray.length; i++) {
-            if (Alphabet.ALPHABET_SMALL_RUS.contains(Character.toLowerCase(sourceCharArray[i]))) {
-                int origIndex = Alphabet.ALPHABET_SMALL_RUS.indexOf(Character.toLowerCase(sourceCharArray[i]));
+            if (Alphabet.ALPHABET.contains(Character.toLowerCase(sourceCharArray[i]))) {
+                int origIndex = Alphabet.ALPHABET.indexOf(Character.toLowerCase(sourceCharArray[i]));
                 int destinationIndex = keyPlus ?
                         ((origIndex + key) < AB_S_RUS_LENGTH ? (origIndex + key) : (origIndex + key) % AB_S_RUS_LENGTH) :
                         ((origIndex - key) >= 0 ? (origIndex - key) : AB_S_RUS_LENGTH + origIndex - key);
-                decryptedCharArray[i] = Alphabet.ALPHABET_SMALL_RUS.get(destinationIndex);
+                decryptedCharArray[i] = Alphabet.ALPHABET.get(destinationIndex);
             } else
                 decryptedCharArray[i] = '-';
         }
@@ -89,7 +89,7 @@ public class Cipher {
 
         TreeMap<Integer, char[]> result = new TreeMap<>();
 
-        for (int i = 1; i < Alphabet.alphabetSmallRusLength; i++) {
+        for (int i = 1; i < Alphabet.ALPHABET_LENGTH; i++) {
             result.put(i, cipherCharArrayMechanism(sourceCharArray, i, false));
         }
 

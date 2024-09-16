@@ -31,7 +31,7 @@ public class Texts {
     //validator
     public static final String KEY_IS_NAN = "Ошибка ввода! Нужно ввести целое число больше 0 или exit для выхода в главное меню";
     public static final String KEY_IS_ZERO = "Не подойдет! Число должно быть больше 0 и не кратно " +
-            Alphabet.alphabetSmallRusLength + " иначе ничего не произойдет";
+            Alphabet.ALPHABET_LENGTH + " иначе ничего не произойдет";
     public static final String KEY_IS_CORRECT = "Ключ прошел проверку и принят";
     public static final String FILE_NOT_FOUND = "Упс, файл не найден... Введите корректный путь или цифру 5 для выхода в главное меню";
     public static final String FILE_WRONG_NAME = "Такое имя не пойдет... Введите нормальное";

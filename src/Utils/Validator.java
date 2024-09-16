@@ -41,7 +41,7 @@ public class Validator {
 
     //если ключ больше, чем кол-во символов алфавита, то возващаем остаток от деления
     private static int correctKeyNumber(int key) {
-        return key < Alphabet.alphabetSmallRusLength ? key : key % Alphabet.alphabetSmallRusLength;
+        return key < Alphabet.ALPHABET_LENGTH ? key : key % Alphabet.ALPHABET_LENGTH;
     }
 
     /*______ФАЙЛ_____*/
@@ -52,11 +52,9 @@ public class Validator {
                 System.out.println(Texts.RETURNING);
                 return null;
             } else {
-                System.out.println(filePath);
                 if (filePath.startsWith("\"") && filePath.endsWith("\""))
                     filePath = filePath.substring(1, filePath.length() - 1);
                 try {
-                    System.out.println(filePath);
                     Path file = Path.of(filePath);
                     if (Files.exists(file)) {
                         System.out.println(Texts.FILE_FOUND);

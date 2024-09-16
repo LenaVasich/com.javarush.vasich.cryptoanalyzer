@@ -21,7 +21,7 @@ public class StatisticalAnalyzer {
     private static int findMostLikelyKey(char[] sourceCharArray) {
         int key;
         LinkedHashMap<Character, Integer> statistics = new LinkedHashMap<>();
-        for (Character alphabet : Alphabet.ALPHABET_SMALL_RUS) { //заполняем шаблон мапы чтобы не брать в расчет символы, которых нет в алфавите
+        for (Character alphabet : Alphabet.ALPHABET) { //заполняем шаблон мапы чтобы не брать в расчет символы, которых нет в алфавите
             statistics.put(alphabet, 0);
         }
         for (char c : sourceCharArray) { //считаем статистику символов
@@ -39,15 +39,12 @@ public class StatisticalAnalyzer {
                 maxFr = entry.getValue();
             }
         }
-        int spaceIndexSource = Alphabet.ALPHABET_SMALL_RUS.indexOf(' ');
-        int spaceIndexResult = Alphabet.ALPHABET_SMALL_RUS.indexOf(maxChar);
-        System.out.println("spaceIndexSource - " + spaceIndexSource + "   spaceIndexResult - " + spaceIndexResult);
-        if (spaceIndexResult < spaceIndexSource)
-            key = Alphabet.alphabetSmallRusLength - spaceIndexSource + spaceIndexResult;
-        else
-            key = spaceIndexResult - spaceIndexSource;
+        int maxIndexResult = Alphabet.ALPHABET.indexOf(maxChar);
+        key = maxIndexResult < Alphabet.SPACE_INDEX ?
+                Alphabet.ALPHABET_LENGTH - Alphabet.SPACE_INDEX + maxIndexResult :
+                maxIndexResult - Alphabet.SPACE_INDEX;
+
         System.out.println("Похоже, что ключ шифрования - " + key);
         return key;
     }
-
 }
