@@ -114,6 +114,7 @@ public class FileManager {
     public static void writeToSmallFile(Path file, char[] sourseCharArray) {
         try (Writer writer = new FileWriter(String.valueOf(file.getFileName()))) {
             writer.write(sourseCharArray);
+            //writer.flush();
             System.out.println(Texts.SUCCESS_ENCRYPTION_TEXT + file.toAbsolutePath() + "\n" + "\n" + Texts.ENTER_NEXT_NUMBER);
         } catch (IOException e) {
             System.out.println(Texts.ERROR_WRITE_SMALL_FILE);

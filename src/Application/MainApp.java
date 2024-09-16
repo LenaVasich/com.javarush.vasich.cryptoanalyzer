@@ -12,7 +12,7 @@ public class MainApp {
     public static void main(String[] args) {
 
         Scanner console = new Scanner(System.in);
-        int answer = 0;
+        int menuNumberInput = 0;
         int cipherKey;
         Path sourseFile, destinationFile;
 
@@ -20,9 +20,9 @@ public class MainApp {
 
         do {
             try {
-                answer = Integer.parseInt(console.nextLine());
+                menuNumberInput = Integer.parseInt(console.nextLine());
 
-                switch (answer) {
+                switch (menuNumberInput) {
                     case 1:
                         System.out.println(Texts.MENU_1);
                         sourseFile = FileManager.getSourceFilePath();// C:\Users\Elena\IdeaProjects\com.javarush.vasich.cryptoanalyzer\src\Data\text.txt
@@ -90,7 +90,7 @@ public class MainApp {
                             drawMainMenu();
                             continue;
                         }
-                        StatisticalAnalyzer_.staticAnalyzer(sourseFile, destinationFile);
+                        StatisticalAnalyzer.staticAnalyzer(sourseFile, destinationFile);
                         break;
 
                     case 5:
@@ -108,7 +108,7 @@ public class MainApp {
             } catch (IOException e) {
                 System.out.println(Texts.IO_ERROR_TEXT);
             }
-        } while (answer != 5);
+        } while (menuNumberInput != 5);
     }
 
     private static void drawMainMenu(){
