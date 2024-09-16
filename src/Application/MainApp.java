@@ -90,7 +90,7 @@ public class MainApp {
                             drawMainMenu();
                             continue;
                         }
-                        StatisticalAnalyzer.staticAnalyzer(sourseFile, destinationFile);
+                        StatisticalAnalyzer_.staticAnalyzer(sourseFile, destinationFile);
                         break;
 
                     case 5:

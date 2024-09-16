@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
 
-public class StatisticalAnalyzer {
+public class StatisticalAnalyzer_ {
 
     public static void staticAnalyzer(Path sourceFile, Path destinationFile) throws IOException {
         char[] sourceCharArray = FileManager.isFileSmall(sourceFile) ? FileManager.readSmallFile(sourceFile) : FileManager.readFirstThousandChars(sourceFile);
