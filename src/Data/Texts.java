@@ -10,7 +10,7 @@ public class Texts {
             "1. Зашифровать файл",
             "2. Расшифровать файл с помощью ключа",
             "3. Расшифровать файл с помощью brute force",
-            "4. Расшифровать файл с помощью  статистического анализа (в разработке)",
+            "4. Расшифровать файл с помощью  статистического анализа (не факт, что сработает)",
             "5. Выход"
     };
     public static final String MENU_ERROR_TEXT = "Такого варианта ответа нет! Пожалуйста, введите целое число от 1 до 5.";
@@ -20,11 +20,13 @@ public class Texts {
     public static final String MENU_3 = "Вы выбрали расшифровать файл с помощью brute force.";
     public static final String MENU_4 = "Вы выбрали расшифровать файл с помощью  статистического анализа.";
     public static final String MENU_5 = "Программа завершена. Пока!";
-    public static final String ENTER_FILE = "Введите адрес и имя файла для шифрования:";
+    public static final String ENTER_FILE = "Введите адрес и имя исходного файла:";
     public static final String ENTER_KEY = "Введите ключ шифрования (целое число больше 0) или exit для выхода в главное меню:";
     public static final String ENTER_RESULT_FILE = "Супер! Осталость только ввести имя файла для создания файла с результатом:";
     public static final String ENCRYPTING = "Шифрую.....";
     public static final String DECRYPTING = "Расшифровываю.....";
+    public static final String ENTER_NEXT_NUMBER = "Введите от 1 до 5 для выбора следующего действия (1 - зашифровать, " +
+            "2 - расшифровать с ключом, 3 - брутфорс, 4 - статистический анализ, 5 - выход)";
 
     //validator
     public static final String KEY_IS_NAN = "Ошибка ввода! Нужно ввести целое число больше 0 или exit для выхода в главное меню";
@@ -49,6 +51,7 @@ public class Texts {
     public static final String ERROR_READ_BIG_FILE = "Что-то пошло не так при чтении большого файла.... =(";
     public static final String ERROR_WRITE_BIG_FILE = "Что-то пошло не так при записи большого файла.... =(";
     public static final String FILE_IS_EMPTY = "УПС! Файл пустой.";
+    public static final String LESS_THEN_1000 = "УПС! В вашем тяжеленном файле менее 1000 символов, как так то? Ничего не получится...";
 
     //cipher
     public static final String DECRYPTING_BRUTE_FORCE = "Расшифровываю брутфорсом... В файл будут записаны все возможные " +
@@ -56,4 +59,7 @@ public class Texts {
     public static final String DECRYPTING_BRUTE_BIG_FILE = "Расшифровываю брутфорсом... У вас огромный файл. " +
             "Я выведу варианты расшифровки его первой строки. Введите подходящий ключ и я расшифрую оставшийся текст с этим ключом";
 
+    //statistical analysis
+    public static final String TEXT_IS_TOO_SHORT_FOR_STATISTICAL_ANALYSIS = "В файле менее 1000 символов, результат " +
+            "расшифрови может быть не корректным.....";
 }

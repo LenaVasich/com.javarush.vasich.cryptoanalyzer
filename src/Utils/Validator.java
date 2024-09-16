@@ -52,7 +52,11 @@ public class Validator {
                 System.out.println(Texts.RETURNING);
                 return null;
             } else {
+                System.out.println(filePath);
+                if (filePath.startsWith("\"") && filePath.endsWith("\""))
+                    filePath = filePath.substring(1, filePath.length() - 1);
                 try {
+                    System.out.println(filePath);
                     Path file = Path.of(filePath);
                     if (Files.exists(file)) {
                         System.out.println(Texts.FILE_FOUND);

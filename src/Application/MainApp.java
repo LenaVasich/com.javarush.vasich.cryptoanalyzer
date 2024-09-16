@@ -80,9 +80,17 @@ public class MainApp {
 
                     case 4:
                         System.out.println(Texts.MENU_4);
-                        //sourseFile = FileManager.getSourceFilePath();
-                        //destinationFile = FileManager.getDestinationFilePath();
-                        StatisticalAnalyzer.findMostLikelyShift();
+                        sourseFile = FileManager.getSourceFilePath();// C:\Users\Elena\IdeaProjects\com.javarush.vasich.cryptoanalyzer\src\Data\text.txt
+                        if (sourseFile == null){
+                            drawMainMenu();
+                            continue;
+                        }
+                        destinationFile = FileManager.getDestinationFilePath();
+                        if (destinationFile == null){
+                            drawMainMenu();
+                            continue;
+                        }
+                        StatisticalAnalyzer.staticAnalyzer(sourseFile, destinationFile);
                         break;
 
                     case 5:

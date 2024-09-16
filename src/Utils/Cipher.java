@@ -4,7 +4,6 @@ import Data.Alphabet;
 import Data.Texts;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Map;
@@ -14,7 +13,6 @@ import java.util.TreeMap;
 public class Cipher {
 
     private static final int AB_S_RUS_LENGTH = Alphabet.alphabetSmallRusLength;
-    private static final long SIZE_OF_BIG_FILE = 10 * 1024 * 1024; //10 Mb
     public static Scanner console = new Scanner(System.in);
 
     /*______ПОЛУЧЕНИЕ КЛЮЧА_____*/
@@ -48,7 +46,7 @@ public class Cipher {
         if (keyPlus)    System.out.println(Texts.ENCRYPTING);
         else            System.out.println(Texts.DECRYPTING);
 
-        if (isFileSmall(sourceFile)) {
+        if (FileManager.isFileSmall(sourceFile)) {
             char[] sourceCharArray = FileManager.readSmallFile(sourceFile);
             char[] decryptedCharArray = cipherCharArrayMechanism(sourceCharArray, key, keyPlus);
             FileManager.createFile(destinationFile);
@@ -67,7 +65,7 @@ public class Cipher {
 
     public static void decryptByBruteForce(Path sourceFile, Path destinationFile) throws IOException {
 
-        if (isFileSmall(sourceFile)) {
+        if (FileManager.isFileSmall(sourceFile)) {
             System.out.println(Texts.DECRYPTING_BRUTE_FORCE);
             char[] sourceCharArray = FileManager.readSmallFile(sourceFile);
             char[] resultCharArray = bruteForceMechanism(sourceCharArray);
@@ -99,17 +97,9 @@ public class Cipher {
         for (Map.Entry<Integer, char[]> entry : result.entrySet()) {
             Integer key = entry.getKey();
             char[] charArray = entry.getValue();
-            data.append(key).append(": ").append(new String(charArray)).append(System.lineSeparator());
+            data.append(key).append(": ").append(new String(charArray)).append(System.lineSeparator()).append(System.lineSeparator());
         }
 
         return data.toString().toCharArray();
     }
-
-
-    /*______РАЗМЕР ФАЙЛА_____*/
-
-    private static boolean isFileSmall(Path file) throws IOException {
-        return Files.size(file) < SIZE_OF_BIG_FILE;
-    }
-
 }
