@@ -1,5 +1,4 @@
-package Application;//Это главный класс, откуда начинается выполнение программы.
-// Отвечает за обработку команд пользователя, вызов соответствующих методов и управление потоком работы программы
+package Application;
 
 import Data.Texts;
 import Utils.*;
@@ -25,7 +24,7 @@ public class MainApp {
                 switch (menuNumberInput) {
                     case 1:
                         System.out.println(Texts.MENU_1);
-                        sourseFile = FileManager.getSourceFilePath();// C:\Users\Elena\IdeaProjects\com.javarush.vasich.cryptoanalyzer\src\Data\text.txt
+                        sourseFile = FileManager.getSourceFilePath();
                         if (sourseFile == null){
                             drawMainMenu();
                             continue;
@@ -55,7 +54,7 @@ public class MainApp {
                             drawMainMenu();
                             continue;
                         }
-                        destinationFile = FileManager.getDestinationFilePath(); // C:\Users\Elena\IdeaProjects\com.javarush.vasich.cryptoanalyzer\result.txt
+                        destinationFile = FileManager.getDestinationFilePath();
                         if (destinationFile == null){
                             drawMainMenu();
                             continue;
@@ -80,7 +79,7 @@ public class MainApp {
 
                     case 4:
                         System.out.println(Texts.MENU_4);
-                        sourseFile = FileManager.getSourceFilePath();// C:\Users\Elena\IdeaProjects\com.javarush.vasich.cryptoanalyzer\src\Data\text.txt
+                        sourseFile = FileManager.getSourceFilePath();
                         if (sourseFile == null){
                             drawMainMenu();
                             continue;

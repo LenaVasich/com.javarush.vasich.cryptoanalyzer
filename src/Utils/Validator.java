@@ -1,4 +1,4 @@
-package Utils;//Валидация входных данных, таких как существование файла, допустимость ключа.
+package Utils;
 
 import Data.Alphabet;
 import Data.Texts;
@@ -89,7 +89,6 @@ public class Validator {
                 System.out.println(Texts.FILE_WRONG_NAME);
                 filePath = console.nextLine();
             }
-
         }
     }
 }

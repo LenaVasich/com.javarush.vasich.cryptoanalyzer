@@ -1,4 +1,4 @@
-package Utils;//Класс, реализующий функциональность шифра Цезаря и дешифровки
+package Utils;
 
 import Data.Alphabet;
 import Data.Texts;
@@ -23,8 +23,8 @@ public class Cipher {
     }
 
     /*______МЕХАНИЗМ ШИФРОВАНИЯ_____*/
-//private
-    public static char[] cipherCharArrayMechanism(char[] sourceCharArray, int key, boolean keyPlus) { //KeyPlus - true - шифруем, false - дешифруем
+
+    private static char[] cipherCharArrayMechanism(char[] sourceCharArray, int key, boolean keyPlus) { //KeyPlus - true - шифруем, false - дешифруем
         char[] decryptedCharArray = new char[sourceCharArray.length];
         for (int i = 0; i < sourceCharArray.length; i++) {
             if (Alphabet.ALPHABET.contains(Character.toLowerCase(sourceCharArray[i]))) {

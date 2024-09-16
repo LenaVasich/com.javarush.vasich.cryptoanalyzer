@@ -1,4 +1,4 @@
-package Utils;//Для статистического анализа при расшифровке.
+package Utils;
 
 import Data.Alphabet;
 import Data.Texts;

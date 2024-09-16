@@ -2,7 +2,7 @@ package Utils;
 
 import Data.Texts;
 
-import java.io.*;  //Для работы с файлами рекомендуется использовать библиотеку Java NIO
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,12 +17,8 @@ public class FileManager {
     /*______СОЗДАНИЕ_____*/
 
     public static void createFile(Path file) {
-//        String fileName = file.toString();
-//        if (!fileName.contains("."))
-//            fileName.concat(".txt");
-//        file = Path.of(fileName);
         try {
-            Files.createFile(file); //создавать в заданной папке если указано только название
+            Files.createFile(file);
             System.out.println(Texts.SUCCESS_CREATED);
         } catch (IOException e) {
             System.out.println(Texts.ERROR_CREATED);
@@ -114,7 +110,6 @@ public class FileManager {
     public static void writeToSmallFile(Path file, char[] sourseCharArray) {
         try (Writer writer = new FileWriter(String.valueOf(file.getFileName()))) {
             writer.write(sourseCharArray);
-            //writer.flush();
             System.out.println(Texts.SUCCESS_ENCRYPTION_TEXT + file.toAbsolutePath() + "\n" + "\n" + Texts.ENTER_NEXT_NUMBER);
         } catch (IOException e) {
             System.out.println(Texts.ERROR_WRITE_SMALL_FILE);
